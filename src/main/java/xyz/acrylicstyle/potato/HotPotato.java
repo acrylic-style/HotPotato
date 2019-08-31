@@ -13,6 +13,7 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -28,6 +29,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
@@ -134,6 +136,10 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		World world = Bukkit.getWorld(mapConfig.getString("world", "world"));
 		final Scoreboard board = manager.getNewScoreboard();
 		event.getPlayer().setGameMode(GameMode.ADVENTURE);
+		event.getPlayer().getInventory().setHelmet(new ItemStack(Material.AIR));
+		event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
+		event.getPlayer().getInventory().setLeggings(new ItemStack(Material.AIR));
+		event.getPlayer().getInventory().setBoots(new ItemStack(Material.AIR));
 		new BukkitRunnable() {
 			public void run() {
 				for (Player player : Bukkit.getOnlinePlayers()) {
@@ -256,8 +262,12 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		teamMap.put(damager.getUniqueId(), Teams.PLAYER);
 		player.setGameMode(GameMode.ADVENTURE);
 		player.setPlayerListName(ChatColor.RED + "[IT] " + player.getName());
-		damager.setPlayerListName(ChatColor.GRAY + player.getName());
+		damager.setPlayerListName(ChatColor.GRAY + damager.getName());
 		damager.getInventory().clear();
+		damager.getInventory().setHelmet(new ItemStack(Material.AIR));
+		damager.getInventory().setChestplate(new ItemStack(Material.AIR));
+		damager.getInventory().setLeggings(new ItemStack(Material.AIR));
+		damager.getInventory().setBoots(new ItemStack(Material.AIR));
 		Utils.potatoInventory(player);
 		damager.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 2); // avoid loud sound, it's 80%!
 		damager.sendMessage(ChatColor.YELLOW + "You've tagged " + player.getName() + "!");
