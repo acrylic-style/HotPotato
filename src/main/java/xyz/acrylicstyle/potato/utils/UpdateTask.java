@@ -87,7 +87,7 @@ public class UpdateTask extends BukkitRunnable {
 					Utils.roll();
 				}
 			}
-			if (Bukkit.getOnlinePlayers().size() > Constants.mininumPlayers && HotPotato.timesLeft >= 0) HotPotato.timesLeft--;
+			if (Bukkit.getOnlinePlayers().size() >= Constants.mininumPlayers && HotPotato.timesLeft >= 0) HotPotato.timesLeft--;
 		} else if (HotPotato.gameStarted) {
 			List<Player> players = new ArrayList<Player>();
 			players.addAll(Bukkit.getOnlinePlayers());
