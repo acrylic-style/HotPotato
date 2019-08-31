@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Constants {
 	public final static String version = "v0.1";
-	public final static String requiredMinecraftVersion = "1.12.2";
+	public final static String requiredMinecraftVersion = "1.8.8";
 	public final static String instanceIdentifier;
 	public final static int intIdentifier;
 	public final static char warning = '\u26a0';
