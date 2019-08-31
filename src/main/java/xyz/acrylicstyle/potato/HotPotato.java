@@ -15,7 +15,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -40,8 +39,7 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
+import xyz.acrylicstyle.potato.utils.ActionBar;
 import xyz.acrylicstyle.potato.utils.Constants;
 import xyz.acrylicstyle.potato.utils.UpdateTask;
 import xyz.acrylicstyle.potato.utils.Utils;
@@ -154,12 +152,12 @@ public final class HotPotato extends JavaPlugin implements Listener {
 				Bukkit.getOnlinePlayers().forEach(player -> {
 					if (HotPotato.teamMap.get(player.getUniqueId()) == Teams.IT) {
 						if (orange) {
-							player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GOLD + "You're IT! Tag someone!"));
+							ActionBar.setActionBarWithoutException(player, ChatColor.GOLD + "You're IT! Tag someone!");
 						} else {
-							player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED + "You're IT! Tag someone!"));
+							ActionBar.setActionBarWithoutException(player, ChatColor.RED + "You're IT! Tag someone!");
 						}
 					} else if (HotPotato.teamMap.get(player.getUniqueId()) == Teams.PLAYER) {
-						player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GREEN + "Run away!"));
+						ActionBar.setActionBarWithoutException(player, ChatColor.GREEN + "Run away!");
 					}
 				});
 			}
@@ -170,7 +168,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		event.getPlayer().getInventory().clear();
 		event.getPlayer().setGameMode(GameMode.ADVENTURE);
 		event.getPlayer().setScoreboard(board);
-		event.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+		event.getPlayer().setMaxHealth(20);
 		final Objective objective = board.registerNewObjective("scoreboard", "dummy");
 		Score score9 = objective.getScore("                        " + ChatColor.GRAY + Constants.instanceIdentifier); // 24 spaces
 		score9.setScore(9);
@@ -256,7 +254,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		damager.setPlayerListName(ChatColor.GRAY + player.getName());
 		damager.getInventory().clear();
 		Utils.potatoInventory(player);
-		damager.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 2); // avoid loud sound, it's 80%!
+		damager.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 2); // avoid loud sound, it's 80%!
 		damager.sendMessage(ChatColor.YELLOW + "You've tagged " + player.getName() + "!");
 		player.sendMessage(ChatColor.RED + "You've tagged by " + damager.getName() + "!");
 		Firework firework = (Firework) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK);

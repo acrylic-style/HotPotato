@@ -1,4 +1,4 @@
 name: HotPotato
 main: xyz.acrylicstyle.potato.HotPotato
 version: 0.0.1
-depend: [TomeitoLib]
+depend: [TomeitoLib, ProtocolLib]

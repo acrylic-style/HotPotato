@@ -8,10 +8,10 @@ import java.util.TimerTask;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.enchantments.Enchantment;
@@ -92,8 +92,8 @@ public class Utils {
 	public static void explodeITs() {
 		Bukkit.getOnlinePlayers().forEach(player -> {
 			if (HotPotato.teamMap.get(player.getUniqueId()) == Teams.IT) {
-				player.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, player.getLocation(), 10);
-				player.getWorld().playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 150, 1); // does volume 150 really works?
+				player.getWorld().spigot().playEffect(player.getLocation(), Effect.EXPLOSION_HUGE, 0, 0, 0, 0, 0, 1, 10, 15);
+				player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 150, 1); // does volume 150 really works?
 				player.sendMessage(ChatColor.YELLOW + "You blew up!");
 				Bukkit.broadcastMessage(ChatColor.GRAY + (player.getDisplayName() == "" || player.getDisplayName() == null ? player.getName() : player.getDisplayName()) + ChatColor.YELLOW + " blew up!");
 				HotPotato.teamMap.put(player.getUniqueId(), Teams.SPECTATOR);
@@ -114,7 +114,7 @@ public class Utils {
 			new BukkitRunnable() {
 				public void run() {
 					if (HotPotato.fireworked*Bukkit.getOnlinePlayers().size() >= 40*Bukkit.getOnlinePlayers().size()) this.cancel();
-					player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_LAUNCH, 100, 1);
+					player.playSound(player.getLocation(), Sound.FIREWORK_LAUNCH, 100, 1);
 					HotPotato.fireworked++;
 				}
 			}.runTaskTimer(Utils.getPotatoInstance(), 0, 5);

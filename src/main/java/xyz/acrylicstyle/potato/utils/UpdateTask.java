@@ -19,6 +19,7 @@ import xyz.acrylicstyle.potato.Teams;
 import xyz.acrylicstyle.tomeito_core.utils.Log;
 
 public class UpdateTask extends BukkitRunnable {
+	@SuppressWarnings("deprecation")
 	public synchronized void run() {
 		long time = System.currentTimeMillis();
 		for (final Player player : Bukkit.getOnlinePlayers()) {
@@ -55,12 +56,12 @@ public class UpdateTask extends BukkitRunnable {
 				score4.setScore(4);
 				// <----- team
 				if (HotPotato.timesLeft == 10) {
-					player.sendTitle(ChatColor.GREEN + "10", "", 0, 25, 0);
+					player.sendTitle(ChatColor.GREEN + "10", "");
 				}
 				/* do not edit this line */ player.setScoreboard(HotPotato.scoreboardMap.get(player.getUniqueId()));
 				if (HotPotato.timesLeft == 5) {
-					player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
-					player.sendTitle(ChatColor.GREEN + "5", "", 0, 25, 0);
+					player.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 1);
+					player.sendTitle(ChatColor.GREEN + "5", "");
 				} else if (HotPotato.timesLeft == 4) {
 					player.setGameMode(GameMode.ADVENTURE);
 					player.getWorld().setGameRuleValue("doMobLoot", "false");
@@ -69,17 +70,17 @@ public class UpdateTask extends BukkitRunnable {
 					player.getWorld().setGameRuleValue("doFireTick", "false");
 					player.getWorld().setGameRuleValue("naturalRegeneration", "false");
 					player.getWorld().setTime(HotPotato.mapConfig.getInt("time", 6000));
-					player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
-					player.sendTitle(ChatColor.AQUA + "4", "", 0, 25, 0);
+					player.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 1);
+					player.sendTitle(ChatColor.AQUA + "4", "");
 				} else if (HotPotato.timesLeft == 3) {
-					player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
-					player.sendTitle(ChatColor.BLUE + "3", "", 0, 25, 0);
+					player.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 1);
+					player.sendTitle(ChatColor.BLUE + "3", "");
 				} else if (HotPotato.timesLeft == 2) {
-					player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
-					player.sendTitle(ChatColor.YELLOW + "2", "", 0, 25, 0);
+					player.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 1);
+					player.sendTitle(ChatColor.YELLOW + "2", "");
 				} else if (HotPotato.timesLeft == 1) {
-					player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 100, 1);
-					player.sendTitle(ChatColor.RED + "1", "", 0, 25, 0);
+					player.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 1);
+					player.sendTitle(ChatColor.RED + "1", "");
 				} else if (HotPotato.timesLeft == 0) {
 					player.setGameMode(GameMode.ADVENTURE);
 					HotPotato.gameStarted = true;
