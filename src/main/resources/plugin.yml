@@ -1,4 +1,4 @@
-name: TNTTag
-main: xyz.acrylicstyle.tnttag.TNTTag
+name: HotPotato
+main: xyz.acrylicstyle.potato.HotPotato
 version: 0.0.1
 depend: [TomeitoLib]
