@@ -1,0 +1,4 @@
+name: TNTTag
+main: xyz.acrylicstyle.tnttag.TNTTag
+version: 0.0.1
+depend: [TomeitoLib]
