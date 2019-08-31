@@ -234,7 +234,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 			event.setMessage(ChatColor.GOLD + event.getMessage());
 		}
 		if (teamMap.get(event.getPlayer().getUniqueId()) == Teams.IT) {
-			Utils.chat(event, Teams.IT, ChatColor.RED + "[IT ]");
+			Utils.chat(event, Teams.IT, ChatColor.RED + "[IT] ");
 		} else if (teamMap.get(event.getPlayer().getUniqueId()) == Teams.PLAYER) {
 			Utils.chat(event, Teams.PLAYER, "");
 		} else {
@@ -242,6 +242,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		}
 	}
 
+	@EventHandler
 	public void onPlayerHurt(EntityDamageByEntityEvent event) {
 		long time = System.currentTimeMillis();
 		if (event.getDamager() instanceof Projectile || !gameStarted || gameEnded) {
