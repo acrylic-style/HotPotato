@@ -98,7 +98,7 @@ public class UpdateTask extends BukkitRunnable {
 			List<Player> players = new ArrayList<Player>();
 			players.addAll(Bukkit.getOnlinePlayers());
 			players.removeIf(player -> {
-				return HotPotato.teamMap.get(player.getUniqueId()) != Teams.SPECTATOR;
+				return HotPotato.teamMap.get(player.getUniqueId()) == Teams.SPECTATOR;
 			});
 			if (players.size() <= 1) {
 				this.cancel();
