@@ -35,7 +35,8 @@ public class Utils {
 	}
 
 	public static void teleportAllPlayers() {
-		ConfigProvider.initWithoutException("./plugins/HotPotato/config.yml");
+		Location location = new Location(Bukkit.getWorld(HotPotato.mapConfig.getString("world")), HotPotato.spawnX, HotPotato.spawnY, HotPotato.spawnZ);
+		for (Player player : Bukkit.getOnlinePlayers()) player.teleport(location);
 	}
 
 	public static void reload() {
@@ -61,8 +62,10 @@ public class Utils {
 		final double ppl = players.size();
 		players.forEach(player -> {
 			if (Math.ceil(ppl/(double) 5) - HotPotato.its > 0) {
+				HotPotato.its++;
 				HotPotato.teamMap.put(player.getUniqueId(), Teams.IT);
 				Utils.potatoInventory(player);
+				player.setPlayerListName(ChatColor.RED + "[IT] " + player.getName());
 				Utils.sendITMessage(player);
 			} else {
 				HotPotato.teamMap.put(player.getUniqueId(), Teams.PLAYER);
@@ -73,7 +76,7 @@ public class Utils {
 
 	public static void sendITMessage(Player player) {
 		player.sendMessage(ChatColor.BLUE + "==================================================");
-		player.sendMessage("" + ChatColor.GOLD + ChatColor.BOLD + "                    ROUND " + HotPotato.round + " STARTED!");
+		player.sendMessage("" + ChatColor.GOLD + ChatColor.BOLD + "          ROUND " + HotPotato.round + " STARTED!");
 		player.sendMessage("");
 		player.sendMessage(ChatColor.RED + "              You did started as IT!");
 		player.sendMessage(ChatColor.RED + "                  Tag to someone!");
