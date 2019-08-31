@@ -15,6 +15,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -169,6 +170,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		event.getPlayer().getInventory().clear();
 		event.getPlayer().setGameMode(GameMode.ADVENTURE);
 		event.getPlayer().setScoreboard(board);
+		event.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
 		final Objective objective = board.registerNewObjective("scoreboard", "dummy");
 		Score score9 = objective.getScore("                        " + ChatColor.GRAY + Constants.instanceIdentifier); // 24 spaces
 		score9.setScore(9);
