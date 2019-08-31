@@ -105,7 +105,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		manager = Bukkit.getScoreboardManager();
 		Bukkit.getPluginManager().registerEvents(potato, potato);
 		Constants.mininumPlayers = config.getInt("mininumPlayers", 3);
-		if (Constants.mininumPlayers <= 2) {
+		if (Constants.mininumPlayers <= 1) {
 			Log.error("You've set mininum players (in config.yml) to " + Constants.mininumPlayers + "!");
 			Log.error("This game won't work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (it'll end immediaty)");
 		}
