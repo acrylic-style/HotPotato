@@ -181,7 +181,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		Score score2 = objective.getScore(ChatColor.GREEN + "    Map: " + name);
 		score2.setScore(2);
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		objective.setDisplayName(""+ChatColor.GREEN + ChatColor.BOLD + "Zombie Escape");
+		objective.setDisplayName(""+ChatColor.GOLD + ChatColor.BOLD + "Hot Potato");
 		scoreboardMap.put(event.getPlayer().getUniqueId(), board);
 		new BukkitRunnable() {
 			public void run() {
