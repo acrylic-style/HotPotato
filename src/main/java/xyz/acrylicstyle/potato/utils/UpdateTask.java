@@ -85,19 +85,20 @@ public class UpdateTask extends BukkitRunnable {
 					player.sendTitle(ChatColor.RED + "1", "");
 				} else if (HotPotato.timesLeft == 0) {
 					player.setGameMode(GameMode.ADVENTURE);
+					if (!once) HotPotato.explodeIn = Utils.getExplodeIn(1);
 					if (!once) HotPotato.gameStarted = true;
 					if (!once) Utils.teleportAllPlayers();
 					if (!once) Utils.roll();
 					once = true;
+					player.sendTitle("", ""); // delete title
 				}
 			}
 			if (Bukkit.getOnlinePlayers().size() >= Constants.mininumPlayers && HotPotato.timesLeft >= 0) HotPotato.timesLeft--;
-			if (HotPotato.timesLeft <= 0) HotPotato.gameStarted = true;
 		} else if (HotPotato.gameStarted) {
 			List<Player> players = new ArrayList<Player>();
 			players.addAll(Bukkit.getOnlinePlayers());
 			players.removeIf(player -> {
-				return HotPotato.teamMap.get(player.getUniqueId()) != Teams.PLAYER;
+				return HotPotato.teamMap.get(player.getUniqueId()) != Teams.SPECTATOR;
 			});
 			if (players.size() <= 1) {
 				this.cancel();

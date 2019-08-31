@@ -102,7 +102,11 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		}
 		manager = Bukkit.getScoreboardManager();
 		Bukkit.getPluginManager().registerEvents(potato, potato);
-		Constants.mininumPlayers = config.getInt("mininumPlayers", 2);
+		Constants.mininumPlayers = config.getInt("mininumPlayers", 3);
+		if (Constants.mininumPlayers <= 2) {
+			Log.error("You've set mininum players (in config.yml) to " + Constants.mininumPlayers + "!");
+			Log.error("This game won't work!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (it'll end immediaty)");
+		}
 		new BukkitRunnable() {
 			public void run() {
 				Bukkit.getWorlds().forEach(world -> world.setPVP(true));
