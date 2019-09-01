@@ -60,6 +60,7 @@ public class Utils {
 			return HotPotato.teamMap.get(player.getUniqueId()) == Teams.SPECTATOR;
 		});
 		final double ppl = players.size();
+		HotPotato.its = 0;
 		players.forEach(player -> {
 			if (Math.ceil(ppl/(double) 5) - HotPotato.its > 0) {
 				HotPotato.its++;
