@@ -258,6 +258,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 			return;
 		}
 		if (teamMap.get(event.getDamager().getUniqueId()) == teamMap.get(event.getEntity().getUniqueId())) return;
+		if (teamMap.get(event.getEntity().getUniqueId()) == Teams.IT || teamMap.get(event.getEntity().getUniqueId()) == Teams.PLAYER) return;
 		Player damager = (Player) event.getDamager();
 		Player player = (Player) event.getEntity();
 		teamMap.put(player.getUniqueId(), Teams.IT);
@@ -272,8 +273,8 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		damager.getInventory().setBoots(new ItemStack(Material.AIR));
 		Utils.potatoInventory(player);
 		damager.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 2); // avoid loud sound, it's 80%!
-		damager.sendMessage(ChatColor.YELLOW + "You've tagged " + player.getName() + "!");
-		player.sendMessage(ChatColor.RED + "You've tagged by " + damager.getName() + "!");
+		damager.sendMessage(ChatColor.GREEN + "You tagged " + player.getName() + "!");
+		player.sendMessage(ChatColor.RED + damager.getName() + " tagged you!");
 		Bukkit.broadcastMessage(ChatColor.GRAY + player.getName() + " is IT!");
 		Firework firework = (Firework) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK);
 		FireworkMeta meta = firework.getFireworkMeta();

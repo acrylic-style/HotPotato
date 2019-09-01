@@ -80,8 +80,8 @@ public class Utils {
 		player.sendMessage(ChatColor.BLUE + "==================================================");
 		player.sendMessage("" + ChatColor.GOLD + ChatColor.BOLD + "          ROUND " + HotPotato.round + " STARTED!");
 		player.sendMessage("");
-		player.sendMessage(ChatColor.RED + "              You did started as IT!");
-		player.sendMessage(ChatColor.RED + "                  Tag to someone!");
+		player.sendMessage(ChatColor.RED + "              You did start as IT!");
+		player.sendMessage(ChatColor.RED + "                  Tag someone!");
 		player.sendMessage(ChatColor.BLUE + "==================================================");
 	}
 
@@ -89,7 +89,7 @@ public class Utils {
 		player.sendMessage(ChatColor.BLUE + "==================================================");
 		player.sendMessage("" + ChatColor.GOLD + ChatColor.BOLD + "                    ROUND " + HotPotato.round + " STARTED!");
 		player.sendMessage("");
-		player.sendMessage(ChatColor.GREEN + "              You did NOT started as IT!");
+		player.sendMessage(ChatColor.GREEN + "              You did NOT start as IT!");
 		player.sendMessage(ChatColor.GREEN + "                      Run away!");
 		player.sendMessage(ChatColor.BLUE + "==================================================");
 	}
@@ -97,7 +97,7 @@ public class Utils {
 	public static void explodeITs() {
 		Bukkit.getOnlinePlayers().forEach(player -> {
 			if (HotPotato.teamMap.get(player.getUniqueId()) == Teams.IT) {
-				player.getWorld().spigot().playEffect(player.getLocation(), Effect.EXPLOSION_HUGE, 0, 0, 0, 0, 0, 1, 10, 15);
+				player.getWorld().spigot().playEffect(player.getLocation(), Effect.EXPLOSION_HUGE, 0, 0, 0, 0, 0, 1, 10, 1000000);
 				player.getWorld().playSound(player.getLocation(), Sound.EXPLODE, 150, 1); // does volume 150 really works?
 				player.sendMessage(ChatColor.YELLOW + "You blew up!");
 				Bukkit.broadcastMessage(ChatColor.GRAY + (player.getDisplayName() == "" || player.getDisplayName() == null ? player.getName() : player.getDisplayName()) + ChatColor.YELLOW + " blew up!");
