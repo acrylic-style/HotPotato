@@ -20,7 +20,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -231,6 +230,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e) {
+		if (e.getInventory() == null) return;
 		if (e.getInventory().getViewers().get(0).getGameMode() == GameMode.ADVENTURE) e.setCancelled(true);
 	}
 
@@ -243,15 +243,17 @@ public final class HotPotato extends JavaPlugin implements Listener {
 			Utils.chat(event, Teams.IT, ChatColor.RED + "[IT] ");
 		} else if (teamMap.get(event.getPlayer().getUniqueId()) == Teams.PLAYER) {
 			Utils.chat(event, Teams.PLAYER, "");
-		} else {
+		} else if (teamMap.get(event.getPlayer().getUniqueId()) == Teams.SPECTATOR) {
 			Utils.chat(event, Teams.SPECTATOR, ChatColor.GRAY + "[SPECTATOR] ");
+		} else {
+			Utils.chat(event, Teams.PLAYER, "", true);
 		}
 	}
 
 	@EventHandler
 	public void onPlayerHurt(EntityDamageByEntityEvent event) {
 		long time = System.currentTimeMillis();
-		if (event.getDamager() instanceof Projectile || !gameStarted || gameEnded) {
+		if (!(event.getDamager() instanceof Player) || !gameStarted || gameEnded) {
 			event.setCancelled(true);
 			return;
 		}

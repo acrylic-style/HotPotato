@@ -51,6 +51,7 @@ public class Utils {
 	}
 
 	public static void roll() {
+		Log.info("Rolling(Utils)..., explode in: " + HotPotato.explodeIn); // TODO: debug
 		HotPotato.round = HotPotato.round + 1;
 		if (HotPotato.round >= 5) Utils.teleportAllPlayers();
 		if (HotPotato.round == 5) Bukkit.broadcastMessage("" + ChatColor.GOLD + ChatColor.BOLD + "Deathmatch has started!");
@@ -61,6 +62,7 @@ public class Utils {
 		});
 		final double ppl = players.size();
 		HotPotato.its = 0;
+		HotPotato.explodeIn = Utils.getExplodeIn(HotPotato.round);
 		players.forEach(player -> {
 			if (Math.ceil(ppl/(double) 5) - HotPotato.its > 0) {
 				HotPotato.its++;
