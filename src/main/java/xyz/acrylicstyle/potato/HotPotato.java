@@ -274,6 +274,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		damager.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 2); // avoid loud sound, it's 80%!
 		damager.sendMessage(ChatColor.YELLOW + "You've tagged " + player.getName() + "!");
 		player.sendMessage(ChatColor.RED + "You've tagged by " + damager.getName() + "!");
+		Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + " is IT!");
 		Firework firework = (Firework) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK);
 		FireworkMeta meta = firework.getFireworkMeta();
 		meta.setPower(2);
