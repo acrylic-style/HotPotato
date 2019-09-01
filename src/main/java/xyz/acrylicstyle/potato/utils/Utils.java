@@ -188,14 +188,14 @@ public class Utils {
 				if (team != pteam) return;
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					if (player.getUniqueId().equals(uuid)) {
-						player.sendMessage(teamname + " " + event.getPlayer().getName() + ChatColor.RESET + ChatColor.WHITE + ": " + event.getMessage());
+						player.sendMessage(teamname + event.getPlayer().getName() + ChatColor.RESET + ChatColor.WHITE + ": " + event.getMessage());
 					}
 				}
 			});
 			event.setCancelled(true);
 			return;
 		}
-		event.setFormat(teamname + " " + event.getPlayer().getName() + ChatColor.RESET + ChatColor.WHITE + ": " + event.getMessage());
+		event.setFormat(teamname + event.getPlayer().getName() + ChatColor.RESET + ChatColor.WHITE + ": " + event.getMessage());
 	}
 
 	public static void potatoInventory(Player player) {
