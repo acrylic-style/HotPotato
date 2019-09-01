@@ -106,7 +106,6 @@ public class UpdateTask extends BukkitRunnable {
 				return;
 			}
 			if (HotPotato.cooldown <= 0) {
-				Log.info("Rolling..."); // TODO: debug
 				HotPotato.roundEnded = false;
 				HotPotato.cooldown = 5;
 				Utils.roll();

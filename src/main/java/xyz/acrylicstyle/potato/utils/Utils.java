@@ -51,7 +51,6 @@ public class Utils {
 	}
 
 	public static void roll() {
-		Log.info("Rolling(Utils)..., explode in: " + HotPotato.explodeIn); // TODO: debug
 		HotPotato.round = HotPotato.round + 1;
 		if (HotPotato.round >= 5) Utils.teleportAllPlayers();
 		if (HotPotato.round == 5) Bukkit.broadcastMessage("" + ChatColor.GOLD + ChatColor.BOLD + "Deathmatch has started!");
