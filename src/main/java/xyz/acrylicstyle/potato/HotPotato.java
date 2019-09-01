@@ -147,9 +147,9 @@ public final class HotPotato extends JavaPlugin implements Listener {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 100000, 1, false, false)); // saturation II
 					player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100000, 9, false, false)); // resistance X
 					if (teamMap.get(player.getUniqueId()) == Teams.IT) {
-						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 3, false, false)); // speed IV
-					} else {
 						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 2, false, false)); // speed III
+					} else {
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, false, false)); // speed II
 					}
 				}
 			}
@@ -161,7 +161,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 				Bukkit.getOnlinePlayers().forEach(player -> {
 					if (HotPotato.teamMap.get(player.getUniqueId()) == Teams.IT) {
 						if (orange) {
-							ActionBar.setActionBarWithoutException(player, ChatColor.GOLD + "You're IT! Tag someone!");
+							ActionBar.setActionBarWithoutException(player, ChatColor.WHITE + "You're IT! Tag someone!");
 						} else {
 							ActionBar.setActionBarWithoutException(player, ChatColor.RED + "You're IT! Tag someone!");
 						}
@@ -274,7 +274,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		damager.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 2); // avoid loud sound, it's 80%!
 		damager.sendMessage(ChatColor.YELLOW + "You've tagged " + player.getName() + "!");
 		player.sendMessage(ChatColor.RED + "You've tagged by " + damager.getName() + "!");
-		Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + " is IT!");
+		Bukkit.broadcastMessage(ChatColor.GRAY + player.getName() + " is IT!");
 		Firework firework = (Firework) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK);
 		FireworkMeta meta = firework.getFireworkMeta();
 		meta.setPower(2);
