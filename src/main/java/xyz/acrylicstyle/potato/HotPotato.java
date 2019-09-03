@@ -131,6 +131,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 
 	@EventHandler
 	public synchronized void onPlayerJoin(final PlayerJoinEvent event) {
+		event.setJoinMessage(" " + ChatColor.AQUA + ">" + ChatColor.RED + ">" + ChatColor.GREEN + "> " + ChatColor.GOLD + "[MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD +  "] " + event.getPlayer().getName() + " joined the game! " + ChatColor.GREEN + "<" + ChatColor.RED + "<" + ChatColor.AQUA + "<");
 		long time = System.currentTimeMillis();
 		World world = Bukkit.getWorld(mapConfig.getString("world", "world"));
 		final Scoreboard board = manager.getNewScoreboard();
@@ -147,13 +148,13 @@ public final class HotPotato extends JavaPlugin implements Listener {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 100000, 1, false, false)); // saturation II
 					player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100000, 9, false, false)); // resistance X
 					if (teamMap.get(player.getUniqueId()) == Teams.IT) {
-						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 2, false, false)); // speed III
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 2, false, false), true); // speed III
 					} else {
-						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, false, false)); // speed II
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, false, false), true); // speed II
 					}
 				}
 			}
-		}.runTaskTimer(this, 200, 200);
+		}.runTaskTimer(this, 20, 20);
 		new BukkitRunnable() {
 			public void run() {
 				if (!gameStarted) return;
@@ -283,7 +284,10 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		meta.addEffect(FireworkEffect.builder().with(Type.BALL_LARGE).withColor(Color.ORANGE).withTrail().build());
 		firework.setFireworkMeta(meta);
 		firework.detonate();
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "effect " + event.getDamager().getName() + " clear");
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "effect " + damager.getName() + " clear");
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "effect " + player.getName() + " clear");
+		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 2, false, false), true); // speed III
+		damager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, false, false), true); // speed II
 		if (debug) {
 			long end = System.currentTimeMillis()-time;
 			Log.debug("onPlayerHurt() took " + end + "ms");
