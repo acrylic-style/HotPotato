@@ -273,6 +273,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		damager.getInventory().setBoots(new ItemStack(Material.AIR));
 		Utils.potatoInventory(player);
 		damager.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 2); // avoid loud sound, it's 80%!
+		player.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 2); // avoid loud sound, it's 80%!
 		damager.sendMessage(ChatColor.GREEN + "You tagged " + player.getName() + "!");
 		player.sendMessage(ChatColor.RED + damager.getName() + " tagged you!");
 		Bukkit.broadcastMessage(ChatColor.GRAY + player.getName() + " is IT!");
@@ -282,6 +283,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		meta.addEffect(FireworkEffect.builder().with(Type.BALL_LARGE).withColor(Color.ORANGE).withTrail().build());
 		firework.setFireworkMeta(meta);
 		firework.detonate();
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "effect " + event.getDamager().getName() + " clear");
 		if (debug) {
 			long end = System.currentTimeMillis()-time;
 			Log.debug("onPlayerHurt() took " + end + "ms");
