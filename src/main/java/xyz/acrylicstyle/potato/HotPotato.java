@@ -258,7 +258,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 			return;
 		}
 		if (teamMap.get(event.getDamager().getUniqueId()) == teamMap.get(event.getEntity().getUniqueId())) return;
-		if (teamMap.get(event.getEntity().getUniqueId()) == Teams.IT || teamMap.get(event.getEntity().getUniqueId()) == Teams.PLAYER) return;
+		if (teamMap.get(event.getEntity().getUniqueId()) == Teams.IT || teamMap.get(event.getDamager().getUniqueId()) == Teams.PLAYER) return;
 		Player damager = (Player) event.getDamager();
 		Player player = (Player) event.getEntity();
 		teamMap.put(player.getUniqueId(), Teams.IT);
