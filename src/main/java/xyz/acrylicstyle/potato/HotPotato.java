@@ -24,6 +24,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -292,5 +293,10 @@ public final class HotPotato extends JavaPlugin implements Listener {
 			long end = System.currentTimeMillis()-time;
 			Log.debug("onPlayerHurt() took " + end + "ms");
 		}
+	}
+
+	@EventHandler(priority=EventPriority.HIGHEST)
+	public void onEntityDamage(EntityDamageEvent event) {
+		event.setCancelled(true);
 	}
 }
