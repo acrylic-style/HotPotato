@@ -173,7 +173,9 @@ public class Utils {
 		meta.setDisplayName(Constants.potatoItemName);
 		meta.addEnchant(Constants.potatoEnchant, 0, true);
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		Constants.potatoMetaConsumer.accept(meta);
 		item.setItemMeta(meta);
+		Constants.potatoStackConsumer.accept(item);
 		return item;
 	}
 

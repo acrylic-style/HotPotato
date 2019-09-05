@@ -1,12 +1,14 @@
 package xyz.acrylicstyle.potato.utils;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class Constants {
 	public final static String version = "v0.1";
@@ -19,6 +21,8 @@ public class Constants {
 	public final static String potatoItemName = ChatColor.RED + "Super Hot Potato";
 	public final static Material potatoItem = Material.BAKED_POTATO;
 	public final static Enchantment potatoEnchant = Enchantment.PROTECTION_ENVIRONMENTAL;
+	public final static Consumer<ItemMeta> potatoMetaConsumer = meta -> {};
+	public final static Consumer<ItemStack> potatoStackConsumer = stack -> {};
 	public final static int intIdentifier;
 	public final static char warning = '\u26a0';
 	public final static char heavy_check_mark = '\u2714';
