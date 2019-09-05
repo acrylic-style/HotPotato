@@ -19,8 +19,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -169,10 +169,11 @@ public class Utils {
 
 	public static ItemStack hotPotatoItem() {
 		ItemStack item = new ItemStack(Constants.potatoItem);
-		ItemMeta meta = item.getItemMeta();
+		SkullMeta meta = (SkullMeta) item.getItemMeta();
 		meta.setDisplayName(Constants.potatoItemName);
 		meta.addEnchant(Constants.potatoEnchant, 0, true);
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		meta.setOwner("yululi");
 		item.setItemMeta(meta);
 		return item;
 	}
