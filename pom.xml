@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>xyz.acrylicstyle.potato</groupId>
   <artifactId>HotPotato</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>Yululi-0.0.1-SNAPSHOT</version>
   <name>Hot Potato</name>
   <build>
     <plugins>
