@@ -21,6 +21,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.md_5.bungee.api.ChatColor;
@@ -67,11 +69,14 @@ public class Utils {
 				HotPotato.its++;
 				HotPotato.teamMap.put(player.getUniqueId(), Teams.IT);
 				Utils.potatoInventory(player);
-				player.setPlayerListName(ChatColor.RED + "[IT] " + player.getName());
+				player.setPlayerListName(Constants.ITPrefix + player.getName());
 				Utils.sendITMessage(player);
+				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Constants.infinityPotionDuration, Constants.ITSpeed, false, false), true); // speed IV
 			} else {
 				HotPotato.teamMap.put(player.getUniqueId(), Teams.PLAYER);
 				Utils.sendPlayerMessage(player);
+				player.setPlayerListName(Constants.playerPrefix + player.getName());
+				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Constants.infinityPotionDuration, Constants.playerSpeed, false, false), true); // speed III
 			}
 		});
 	}
@@ -163,10 +168,10 @@ public class Utils {
 	}
 
 	public static ItemStack hotPotatoItem() {
-		ItemStack item = new ItemStack(Material.BAKED_POTATO);
+		ItemStack item = new ItemStack(Constants.potatoItem);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + "Super Hot Potato");
-		meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 0, true);
+		meta.setDisplayName(Constants.potatoItemName);
+		meta.addEnchant(Constants.potatoEnchant, 0, true);
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		item.setItemMeta(meta);
 		return item;
@@ -179,6 +184,7 @@ public class Utils {
 	public static void chat(AsyncPlayerChatEvent event, Teams pteam, String teamname, boolean alwaysAll) {
 		event.setMessage(event.getMessage().replaceAll("<3", "" + ChatColor.RED + Constants.heart + ChatColor.RESET));
 		event.setMessage(event.getMessage().replaceAll(":peace:", "" + ChatColor.GREEN + Constants.peace + ChatColor.RESET));
+		event.setMessage(event.getMessage().replaceAll(":yes:", "" + ChatColor.GREEN + Constants.heavy_check_mark + ChatColor.RESET));
 		if (HotPotato.gameEnded || !HotPotato.gameStarted || alwaysAll) {
 			event.setFormat(teamname + event.getPlayer().getName() + ChatColor.RESET + ChatColor.WHITE + ": " + event.getMessage());
 			return;
@@ -210,9 +216,9 @@ public class Utils {
 		player.getInventory().setItem(6, item);
 		player.getInventory().setItem(7, item);
 		player.getInventory().setItem(8, item);
-		player.getInventory().setHelmet(Utils.createLeatherItemStack(Material.LEATHER_HELMET, 255, 165, 0));
-		player.getInventory().setChestplate(Utils.createLeatherItemStack(Material.LEATHER_CHESTPLATE, 255, 165, 0));
-		player.getInventory().setLeggings(Utils.createLeatherItemStack(Material.LEATHER_LEGGINGS, 255, 165, 0));
-		player.getInventory().setBoots(Utils.createLeatherItemStack(Material.LEATHER_BOOTS, 255, 165, 0));
+		player.getInventory().setHelmet(Constants.helmet);
+		player.getInventory().setChestplate(Constants.chestplate);
+		player.getInventory().setLeggings(Constants.leggings);
+		player.getInventory().setBoots(Constants.boots);
 	}
 }

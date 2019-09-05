@@ -25,6 +25,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -75,6 +76,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 	public static double spawnX = 0;
 	public static double spawnY = 0;
 	public static double spawnZ = 0;
+	public static int players = 0;
 
 	private final HotPotato potato = this;
 
@@ -136,7 +138,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		long time = System.currentTimeMillis();
 		World world = Bukkit.getWorld(mapConfig.getString("world", "world"));
 		final Scoreboard board = manager.getNewScoreboard();
-		event.getPlayer().setGameMode(GameMode.ADVENTURE);
+		event.getPlayer().setGameMode(Constants.defaultGameMode);
 		event.getPlayer().getInventory().setHelmet(new ItemStack(Material.AIR));
 		event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
 		event.getPlayer().getInventory().setLeggings(new ItemStack(Material.AIR));
@@ -145,13 +147,13 @@ public final class HotPotato extends JavaPlugin implements Listener {
 			public void run() {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					if (player.isDead()) player.spigot().respawn();
-					if (player.getGameMode() == GameMode.SURVIVAL) player.setGameMode(GameMode.ADVENTURE);
+					if (player.getGameMode() == GameMode.SURVIVAL) player.setGameMode(Constants.defaultGameMode);
 					player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 100000, 1, false, false)); // saturation II
 					player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100000, 9, false, false)); // resistance X
 					if (teamMap.get(player.getUniqueId()) == Teams.IT) {
-						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 2, false, false), true); // speed III
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Constants.infinityPotionDuration, Constants.ITSpeed, false, false), true); // speed IV
 					} else {
-						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, false, false), true); // speed II
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Constants.infinityPotionDuration, Constants.playerSpeed, false, false), true); // speed III
 					}
 				}
 			}
@@ -163,12 +165,12 @@ public final class HotPotato extends JavaPlugin implements Listener {
 				Bukkit.getOnlinePlayers().forEach(player -> {
 					if (HotPotato.teamMap.get(player.getUniqueId()) == Teams.IT) {
 						if (orange) {
-							ActionBar.setActionBarWithoutException(player, ChatColor.WHITE + "You're IT! Tag someone!");
+							ActionBar.setActionBarWithoutException(player, ChatColor.WHITE + Constants.ITActionBar);
 						} else {
-							ActionBar.setActionBarWithoutException(player, ChatColor.RED + "You're IT! Tag someone!");
+							ActionBar.setActionBarWithoutException(player, ChatColor.RED + Constants.ITActionBar);
 						}
 					} else if (HotPotato.teamMap.get(player.getUniqueId()) == Teams.PLAYER) {
-						ActionBar.setActionBarWithoutException(player, ChatColor.GREEN + "Run away!");
+						ActionBar.setActionBarWithoutException(player, Constants.playerActionBar);
 					}
 				});
 			}
@@ -177,7 +179,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		lastScore4Map.put(event.getPlayer().getUniqueId(), "");
 		lastScore8Map.put(event.getPlayer().getUniqueId(), "");
 		event.getPlayer().getInventory().clear();
-		event.getPlayer().setGameMode(GameMode.ADVENTURE);
+		event.getPlayer().setGameMode(Constants.defaultGameMode);
 		event.getPlayer().setScoreboard(board);
 		event.getPlayer().setMaxHealth(20);
 		final Objective objective = board.registerNewObjective("scoreboard", "dummy");
@@ -192,15 +194,15 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		Score score2 = objective.getScore(ChatColor.GREEN + "    Map: " + name);
 		score2.setScore(2);
 		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		objective.setDisplayName(""+ChatColor.GOLD + ChatColor.BOLD + "Hot Potato");
+		objective.setDisplayName(Constants.gameNameColored);
 		scoreboardMap.put(event.getPlayer().getUniqueId(), board);
 		new BukkitRunnable() {
 			public void run() {
 				event.getPlayer().getInventory().clear();
 				event.getPlayer().teleport(world.getSpawnLocation());
-				event.getPlayer().setGameMode(GameMode.ADVENTURE);
+				event.getPlayer().setGameMode(Constants.defaultGameMode);
 				event.getPlayer().sendMessage(ChatColor.BLUE + "--------------------------------------------------");
-				event.getPlayer().sendMessage(ChatColor.GOLD + "          - Hot Potato " + ChatColor.GRAY + "(" + Constants.version + ")" + ChatColor.GOLD + " -");
+				event.getPlayer().sendMessage(ChatColor.GOLD + "          - " + Constants.gameName + " " + ChatColor.GRAY + "(" + Constants.version + ")" + ChatColor.GOLD + " -");
 				event.getPlayer().sendMessage(ChatColor.BLUE + "--------------------------------------------------");
 				if (gameStarted) {
 					Player player = event.getPlayer();
@@ -233,7 +235,7 @@ public final class HotPotato extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e) {
 		if (e.getInventory() == null) return;
-		if (e.getInventory().getViewers().get(0).getGameMode() == GameMode.ADVENTURE) e.setCancelled(true);
+		if (e.getInventory().getViewers().get(0).getGameMode() == Constants.defaultGameMode) e.setCancelled(true);
 	}
 
 	@EventHandler(priority=EventPriority.HIGHEST)
@@ -242,11 +244,11 @@ public final class HotPotato extends JavaPlugin implements Listener {
 			event.setMessage(ChatColor.GOLD + event.getMessage());
 		}
 		if (teamMap.get(event.getPlayer().getUniqueId()) == Teams.IT) {
-			Utils.chat(event, Teams.IT, ChatColor.RED + "[IT] ");
+			Utils.chat(event, Teams.IT, Constants.ITPrefix);
 		} else if (teamMap.get(event.getPlayer().getUniqueId()) == Teams.PLAYER) {
-			Utils.chat(event, Teams.PLAYER, "");
+			Utils.chat(event, Teams.PLAYER, Constants.playerPrefix);
 		} else if (teamMap.get(event.getPlayer().getUniqueId()) == Teams.SPECTATOR) {
-			Utils.chat(event, Teams.SPECTATOR, ChatColor.GRAY + "[SPECTATOR] ");
+			Utils.chat(event, Teams.SPECTATOR, Constants.spectatorPrefix);
 		} else {
 			Utils.chat(event, Teams.PLAYER, "", true);
 		}
@@ -265,9 +267,9 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		Player player = (Player) event.getEntity();
 		teamMap.put(player.getUniqueId(), Teams.IT);
 		teamMap.put(damager.getUniqueId(), Teams.PLAYER);
-		player.setGameMode(GameMode.ADVENTURE);
-		player.setPlayerListName(ChatColor.RED + "[IT] " + player.getName());
-		damager.setPlayerListName(ChatColor.GRAY + damager.getName());
+		player.setGameMode(Constants.defaultGameMode);
+		player.setPlayerListName(Constants.ITPrefix + player.getName());
+		damager.setPlayerListName(Constants.playerPrefix + damager.getName());
 		damager.getInventory().clear();
 		damager.getInventory().setHelmet(new ItemStack(Material.AIR));
 		damager.getInventory().setChestplate(new ItemStack(Material.AIR));
@@ -287,8 +289,8 @@ public final class HotPotato extends JavaPlugin implements Listener {
 		firework.detonate();
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "effect " + damager.getName() + " clear");
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "effect " + player.getName() + " clear");
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 2, false, false), true); // speed III
-		damager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, false, false), true); // speed II
+		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Constants.infinityPotionDuration, Constants.ITSpeed, false, false), true); // speed IV
+		damager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Constants.infinityPotionDuration, Constants.playerSpeed, false, false), true); // speed III
 		if (debug) {
 			long end = System.currentTimeMillis()-time;
 			Log.debug("onPlayerHurt() took " + end + "ms");
@@ -297,6 +299,15 @@ public final class HotPotato extends JavaPlugin implements Listener {
 
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onEntityDamage(EntityDamageEvent event) {
-		event.setCancelled(true);
+		if (event.getCause() == DamageCause.MELTING
+				|| event.getCause() == DamageCause.LAVA
+				|| event.getCause() == DamageCause.FALL
+				|| event.getCause() == DamageCause.FIRE
+				|| event.getCause() == DamageCause.FIRE_TICK
+				|| event.getCause() == DamageCause.MAGIC
+				|| event.getCause() == DamageCause.STARVATION
+				|| event.getCause() == DamageCause.DROWNING
+				|| event.getCause() == DamageCause.POISON) event.setCancelled(true);
+		event.setDamage(0.0);
 	}
 }
