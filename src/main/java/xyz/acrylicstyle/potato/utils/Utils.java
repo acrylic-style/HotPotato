@@ -168,7 +168,7 @@ public class Utils {
 	}
 
 	public static ItemStack hotPotatoItem() {
-		ItemStack item = new ItemStack(Constants.potatoItem);
+		ItemStack item = new ItemStack(Constants.potatoItem, 1, (byte) 3);
 		SkullMeta meta = (SkullMeta) item.getItemMeta();
 		meta.setDisplayName(Constants.potatoItemName);
 		meta.addEnchant(Constants.potatoEnchant, 0, true);
